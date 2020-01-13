@@ -20,19 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Application implements UserInterface
 {
     /**
-     * @var UuidInterface
-     *
-     * @ApiProperty(
-     * 	   identifier=true,
-     *     attributes={
-     *         "openapi_context"={
-     *         	   "description" = "The UUID identifier of this object",
-     *             "type"="string",
-     *             "format"="uuid",
-     *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-     *         }
-     *     }
-     * )
+     * @var UuidInterface The UUID identifier of this object
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @Groups({"read"})
      * @Assert\Uuid
@@ -46,7 +35,7 @@ class Application implements UserInterface
     /**
      * @ORM\Column(type="json")
      * @Groups({"read","write"})
-     * @Asser\NotBlank
+     * @Assert\NotBlank
      */
     private $roles = [];
 
@@ -58,7 +47,7 @@ class Application implements UserInterface
      */
     private $password;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -70,7 +59,7 @@ class Application implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->uuid;
+        return (string) $this->id;
     }
 
     /**
