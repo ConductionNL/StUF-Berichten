@@ -85,17 +85,32 @@ class StufSubscriber implements EventSubscriberInterface
 
         $template = $this->templating->createTemplate('stuf/'.$template);
         $message = $template->render($dataset);
-
-        $response = $this->client->request('', $destination, ['headers'=>$headers]);
+        $proces = 'POST';
+        $response = $this->client->request($proces, $destination, ['headers'=>$headers, 'body'=>$message]);
 
         $respContentType = $response->getHeader('Content-Type');
-        if($respContentType == 'application/xml'){
+        $statusCode = $response->getStatusCode()
+        if(($statusCode == 200 || $statusCode == 201) && $respContentType == 'application/xml'){
             $xml = $response->getBody();
             $encoder = new XmlEncoder();
-            $data = $encoder->decode($xml,'array');
+            $result = $encoder->decode($xml,'array');
+        }elseif($statusCode == 200 || $statusCode == 201){
+//            throw new ;
         }
+        else{
+            https_response_code($statusCode);
+            var_dump($proces.' returned:'.$statusCode);
+            var_dump($headers);
+            var_dump($message);
+            var_dump(json_encode($destination));
+            var_dump($response);
+            die;
+        }
+        $json = $this->serializer->serialize(
+            $result,
+            $renderType, ['enable_max_depth' => true]
+        );
 
-        
         // Creating a response
         $response = new Response(
             $json,
