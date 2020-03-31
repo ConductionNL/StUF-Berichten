@@ -20,6 +20,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -95,10 +96,10 @@ class StufSubscriber implements EventSubscriberInterface
             $encoder = new XmlEncoder();
             $result = $encoder->decode($xml,'array');
         }elseif($statusCode == 200 || $statusCode == 201){
-//            throw new ;
+            throw new BadRequestHttpException();
         }
         else{
-            https_response_code($statusCode);
+            http_response_code($statusCode);
             var_dump($proces.' returned:'.$statusCode);
             var_dump($headers);
             var_dump($message);
