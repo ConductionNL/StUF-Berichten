@@ -49,7 +49,7 @@ class StufSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['stuf', EventPriorities::PRE_DESERIALIZE],
+            KernelEvents::REQUEST => ['stuf', EventPriorities::PRE_VALIDATE],
         ];
     }
 
@@ -59,6 +59,9 @@ class StufSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
+        if($method != Request::METHOD_POST && $route != 'api_stufmessage_post_collection'){
+
+        }
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
@@ -90,7 +93,7 @@ class StufSubscriber implements EventSubscriberInterface
         $response = $this->client->request($proces, $destination, ['headers'=>$headers, 'body'=>$message]);
 
         $respContentType = $response->getHeader('Content-Type');
-        $statusCode = $response->getStatusCode()
+        $statusCode = $response->getStatusCode();
         if(($statusCode == 200 || $statusCode == 201) && $respContentType == 'application/xml'){
             $xml = $response->getBody();
             $encoder = new XmlEncoder();

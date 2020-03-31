@@ -6,8 +6,50 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\StufMessageRepository")
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *      		"path"="/stuf_messages",
+ *              "method"="POST",
+ *              "swagger_context" = {
+ *              	"description" = "Converts JSON data to a StUF message based upon twig templates and a dataset",
+ *                  "parameters" = {
+ *                      {
+ *                          "name" = "destination",
+ *                          "in" = "request",
+ *                          "description" = "The location the StUF message should be sent to",
+ *                          "required" = true,
+ *                          "type" : "string"
+ *                      },
+ *                      {
+ *                          "name" = "headers",
+ *                          "in" = "request",
+ *                          "description" = "The request headers that should be passed to the destination server",
+ *                          "required" = true,
+ *                          "type" : "array"
+ *                      },
+ *                      {
+ *                          "name" = "dataset",
+ *                          "in" = "request",
+ *                          "description" = "The dataset to be transformed to StUF",
+ *                          "required" = true,
+ *                          "type" : "json",
+ *                      },
+ *                      {
+ *                          "name" = "template",
+ *                          "in" = "request",
+ *                          "description" = "The name of the template that should be used to form the message",
+ *                          "required" = true,
+ *                          "type" : "string",
+ *                      }
+ *                  }
+ *               }
+ *          }
+ *     },
+ *     itemOperations={
+ *     }
+ * )
+ * @ORM\Entity()
  */
 class StufMessage
 {
