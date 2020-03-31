@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource(
  *     collectionOperations={
- *          "get"={
+ *          "post"={
  *      		"path"="/stuf_messages",
  *              "method"="POST",
  *              "swagger_context" = {
