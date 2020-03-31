@@ -45,6 +45,22 @@ use Doctrine\ORM\Mapping as ORM;
  *                  }
  *               }
  *          }
+ *          "post_stuf"={
+ *      		"path"="/stuf_messages/stuf",
+ *              "method"="POST",
+ *              "swagger_context" = {
+ *              	"description" = "Converts a StUF message to JSON",
+ *                  "parameters" = {
+ *                      {
+ *                          "name" = "destination",
+ *                          "in" = "query",
+ *                          "description" = "The location the StUF message should be sent to",
+ *                          "required" = true,
+ *                          "type" : "string"
+ *                      }
+ *                  }
+ *               }
+ *          }
  *     },
  *     itemOperations={
  *     }

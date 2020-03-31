@@ -8,6 +8,7 @@ use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Invoice;
 use App\Entity\Payment;
 use App\Entity\Service;
+use App\Service\CommonGroundService;
 use App\Service\MollieService;
 use App\Service\SumUpService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,8 +36,9 @@ class StufSubscriber implements EventSubscriberInterface
     private $serializer;
     private $client;
     private $templating;
+    private $commonGroundService;
 
-    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, SerializerInterface $serializer, Environment $twig)
+    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, SerializerInterface $serializer, Environment $twig, CommonGroundService $commonGroundService)
     {
 
         $this->params = $params;
@@ -44,6 +46,7 @@ class StufSubscriber implements EventSubscriberInterface
         $this->serializer = $serializer;
         $this->client = new Client();
         $this->templating = $twig;
+        $this->commonGroundService = $commonGroundService;
     }
 
     public static function getSubscribedEvents()
@@ -59,9 +62,18 @@ class StufSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
-        if($method != Request::METHOD_POST && $route != 'api_stufmessage_post_collection'){
-
+        $encoder = new XmlEncoder();
+        if($method != Request::METHOD_POST && $route != 'api_stuf_message_post_collection' && $route != 'api_stuf_message_post_stuf_collection'){
+            return;
         }
+//        elseif($route=='api_stuf_message_post_stuf_collection'){
+//            $result = $encoder->decode($event->getRequest()->request, 'array');
+//
+//            $response = $this->commonGroundService->createResource($result, $event->getRequest()->query->get('destination'));
+//
+//
+//
+//        }
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
@@ -87,7 +99,7 @@ class StufSubscriber implements EventSubscriberInterface
         $dataset = $request['dataset'];
         $template = $request['template'];
 
-        $template = $this->templating->createTemplate('stuf/'.$template);
+        $template = $this->templating->createTemplate('requests/'.$template);
         $message = $template->render($dataset);
         $proces = 'POST';
         $response = $this->client->request($proces, $destination, ['headers'=>$headers, 'body'=>$message]);
@@ -96,7 +108,6 @@ class StufSubscriber implements EventSubscriberInterface
         $statusCode = $response->getStatusCode();
         if(($statusCode == 200 || $statusCode == 201) && $respContentType == 'application/xml'){
             $xml = $response->getBody();
-            $encoder = new XmlEncoder();
             $result = $encoder->decode($xml,'array');
         }elseif($statusCode == 200 || $statusCode == 201){
             throw new BadRequestHttpException();
