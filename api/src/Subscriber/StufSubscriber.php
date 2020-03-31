@@ -21,10 +21,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Yaml\Yaml;
 
-use Twig_Environment as Environment;
+use Twig\Environment as Environment;
 
 class StufSubscriber implements EventSubscriberInterface
 {
@@ -85,9 +86,16 @@ class StufSubscriber implements EventSubscriberInterface
         $template = $this->templating->createTemplate('stuf/'.$template);
         $message = $template->render($dataset);
 
-        ;
+        $response = $this->client->request('', $destination, ['headers'=>$headers]);
 
+        $respContentType = $response->getHeader('Content-Type');
+        if($respContentType == 'application/xml'){
+            $xml = $response->getBody();
+            $encoder = new XmlEncoder();
+            $data = $encoder->decode($xml,'array');
+        }
 
+        
         // Creating a response
         $response = new Response(
             $json,
