@@ -1,16 +1,16 @@
 openapi: 3.0.2
 info:
-  title: 'Proto component commonground'
+  title: 'Stuf component'
   version: V.0.1
   description: |
     API Details
-    - Component: Proto component commonground
-    - Reference: pc
+    - Component: Stuf component
+    - Reference: stuf
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/proto-component) / [zip](https://github.com/ConductionNL/proto-component/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/pc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -1924,6 +1924,131 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
         description: 'The updated ChangeLog resource'
+  /stuf_interfaces:
+    post:
+      tags:
+        - StufInterface
+      operationId: postStufInterfaceCollection
+      summary: 'Creates a StufInterface resource.'
+      responses:
+        201:
+          description: 'StufInterface resource created'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/StufInterface:jsonld'
+            application/json+ld:
+              schema:
+                $ref: '#/components/schemas/StufInterface:jsonld'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/json+vnd.api:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/json+health:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/StufInterface'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/StufInterface:jsonld'
+          application/json+ld:
+            schema:
+              $ref: '#/components/schemas/StufInterface:jsonld'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/json+vnd.api:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/json+health:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/StufInterface'
+        description: 'The new StufInterface resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
 components:
   schemas:
     AuditTrail-read:
@@ -2308,6 +2433,77 @@ components:
         '@type':
           readOnly: true
           type: string
+    StufInterface:
+      type: object
+      description: ''
+      properties:
+        id:
+          readOnly: true
+          type: string
+        destination:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        headers:
+          type: array
+          items:
+            type: string
+        data:
+          type: array
+          items:
+            type: string
+        template:
+          type: string
+        mapping:
+          type: array
+          items:
+            type: string
+        authentication:
+          type: array
+          items:
+            type: string
+    'StufInterface:jsonld':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: string
+        destination:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        headers:
+          type: array
+          items:
+            type: string
+        data:
+          type: array
+          items:
+            type: string
+        template:
+          type: string
+        mapping:
+          type: array
+          items:
+            type: string
+        authentication:
+          type: array
+          items:
+            type: string
 definitions:
   AuditTrail-read:
     properties:
@@ -2413,12 +2609,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-30 13:49:01'
+        example: '2020-04-01 07:48:31'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-30 13:49:01'
+        example: '2020-04-01 07:48:31'
     required: []
   AuditTrail-write:
     properties:
@@ -2427,6 +2623,14 @@ definitions:
         type: string
         example: 'This log line looks suspicius'
         maxLength: 2555
+    required: []
+  StufInterface-read:
+    properties:
+      destination:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
     required: []
   ChangeLog-read:
     properties:
@@ -2466,12 +2670,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-30 13:49:01'
+        example: '2020-04-01 07:48:31'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-30 13:49:01'
+        example: '2020-04-01 07:48:31'
     required: []
   ChangeLog-write:
     properties:
@@ -2488,6 +2692,12 @@ tags:
       An resource representing a log line.
       
       This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: StufInterface
+    description: |
+      
+      
+      
   -
     name: ChangeLog
     description: |
