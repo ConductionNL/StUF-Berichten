@@ -131,6 +131,9 @@ class StufInterface
     private $dateModified;
 
     /**
+     * @var string The response received from the remote destination
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $response;

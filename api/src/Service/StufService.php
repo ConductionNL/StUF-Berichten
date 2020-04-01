@@ -86,7 +86,7 @@ class StufService
                 $renderType, ['enable_max_depth' => true]
             );
         }
-//        $request->setResponse($return);
+        $request->setResponse($return);
         $this->em->persist($request);
         $this->em->flush();
         return $request;
