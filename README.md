@@ -6,6 +6,8 @@ Do originally designed to serve the dutch stuf standard the interface by its nat
 
 ## Authenticating against your stuf endpoint
 
+If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
+
 ## Turning a (LD-)JSON request to XML
 
 In order 
@@ -25,7 +27,10 @@ When using a stuff call that could return several commonground objects we recomo
 
 You can add your own message templates to this service, since the service a susch is a community effort the preffered way of doing so would be to [create a branch]() and your templates and the start a pull request to provide your templates to others.
 
+
 ### Folder structure 
+
+Templates should be stored under the 
 
 ### Using data from commonground sources
 
@@ -87,9 +92,9 @@ Stuff mesagges tend to get enormos, with fast amounts of repeated resources and 
 
 In order for the stuf component to collect additional commonground data it needs acces to that data, from a security perspective the preffered way of doing this authorising the stuf component. This would also have the beniffit of cousing propper logging. 
 
-You can however for pratical reasons also opt for 'on behalve of authentication', in wisch case you profide the component with references for the specific endpoints that it needs on an domain basis (the assumption here being that one might need differend authentications for differend components and that components are hosted on domains). 
+You can however for practical reasons also opt for 'on behalve of authentication', in which case you provide the component with references for the specific endpoints that it needs on an domain basis (the assumption here being that one might need different authentications for different components and that components are hosted on domains). 
 
-Authentications schould be an array of authentication  objects.
+Authentications should be an array of authentication  objects.
 
 ```json
 {
@@ -114,7 +119,7 @@ Authentications schould be an array of authentication  objects.
 }
 ```
 
-If authentication has not been provided for an component the stuff component wil use its own authentication (as provided in the .env file)
+If authentication has not been provided for an component the StUF component wil use its own authentication (as provided in the .env file).
 
 ## License
 
