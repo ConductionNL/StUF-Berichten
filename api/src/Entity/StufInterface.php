@@ -138,6 +138,21 @@ class StufInterface
      */
     private $response;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $digest;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -269,6 +284,42 @@ class StufInterface
     public function setResponse(?string $response): self
     {
         $this->response = $response;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getDigest(): ?string
+    {
+        return $this->digest;
+    }
+
+    public function setDigest(?string $digest): self
+    {
+        $this->digest = $digest;
 
         return $this;
     }

@@ -42,9 +42,10 @@ class StufService
         //To send the request
         if($username = $request->getUsername() && $password = $request->getPassword()){
             $auth = [$username, $password, $request->getDigest()];
-            $this->client->
+            $response = $this->client->request($request->getRequestMethod(), $request->getDestination(), ['headers' => $request->getHeaders(), 'auth'=>$auth, 'body' => $message]);
+        }else{
+            $response = $this->client->request($request->getRequestMethod(), $request->getDestination(), ['headers' => $request->getHeaders(), 'body' => $message]);
         }
-        $response = $this->client->request($request->getRequestMethod(), $request->getDestination(), ['headers' => $request->getHeaders(), 'body' => $message]);
 
         //Get return data
         $respContentType = $response->getHeader('Content-Type');
