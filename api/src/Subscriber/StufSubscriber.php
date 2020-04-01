@@ -5,6 +5,8 @@ namespace App\Subscriber;
 
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\StufInterface;
+use App\Service\StufService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,35 +19,37 @@ class StufSubscriber implements EventSubscriberInterface
 {
     private $params;
     private $em;
+    private $stufService;
 
-    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em)
+    public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, StufService $stufService)
     {
 
         $this->params = $params;
         $this->em = $em;
+        $this->stufService = $stufService;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['stuf', EventPriorities::PRE_VALIDATE],
+            KernelEvents::REQUEST => ['stuf', EventPriorities::POST_VALIDATE],
         ];
     }
 
     public function stuf(RequestEvent $event)
     {
-        //$result = $event->getControllerResult();
+        $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
-        
-        if($method != Request::METHOD_POST && $route != 'api_stuf_message_post_collection' && $route != 'api_stuf_message_post_stuf_collection'){
+
+        if($method != Request::METHOD_POST && !($result instanceof StufInterface)){
             return;
         }
-        
+
         // Gettting the entity
         $request = $event->getControllerResult();
-        
+
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
@@ -66,45 +70,13 @@ class StufSubscriber implements EventSubscriberInterface
                 $contentType = 'application/ld+json';
                 $renderType = 'jsonld';
         }
-        
+
         // stuf service
         $request = $this->stufService->request($request, $contentType, $renderType);
-        
-        //ipv dit
-		/*
-        $template = $this->templating->createTemplate('requests/'.$request->getTemplate());
-        $message = $template->render($request->getData());
-        
-       //$proces = 'POST';
-        $response = $this->client->request($request->getMethod(), $destination, ['headers'=>$headers, 'body'=> $message]);
 
-        $respContentType = $response->getHeader('Content-Type');
-        $statusCode = $response->getStatusCode();
-        if(($statusCode == 200 || $statusCode == 201) && $respContentType == 'application/xml'){
-            $xml = $response->getBody();
-            $result = $encoder->decode($xml,'array');
-        }elseif($statusCode == 200 || $statusCode == 201){
-            throw new BadRequestHttpException();
-        }
-        else{
-            http_response_code($statusCode);
-            var_dump($proces.' returned:'.$statusCode);
-            var_dump($headers);
-            var_dump($message);
-            var_dump(json_encode($destination));
-            var_dump($response);
-            die;
-        }
-        $json = $this->serializer->serialize(
-            $result,
-            $renderType, ['enable_max_depth' => true]
-        );
-		*/
- 
-        
         // Creating a response
         $response = new Response(
-        	$request->getReponce(),
+        	$request->getReponse(),
             Response::HTTP_CREATED,
             ['content-type' => $contentType]
         );

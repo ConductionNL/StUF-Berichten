@@ -30,6 +30,7 @@ use Doctrine\Common\Collections\Criteria;
  *     }
  * )
  * @ORM\Entity()
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  */
 class StufInterface
 {
@@ -45,36 +46,119 @@ class StufInterface
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
+    private $id;
+
+    /**
+     * @var string The destination url of the request
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="array")
+     */
     private $destination;
 
     /**
+     * @var array The headers to pass on when performing an request
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="array")
      */
     private $headers = [];
 
     /**
+     * @var array The data to be passed on as StUF
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="json")
      */
     private $data = [];
 
     /**
+     * @var string The template to use to create the StUF message
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $requestTemplate;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $responceTemplate;
 
     /**
+     * @var string The template to use to create the StUF message
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $responseTemplate;
+
+    /**
+     * @var array
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="json")
      */
     private $mapping = [];
 
     /**
+     * @var array
+     *
+     * @Groups({"write"})
+     * @ORM\Column(type="json")
      */
     private $authentication = [];
+
+    /**
+     * @var string The HTTP method to use
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $requestMethod = 'POST';
+
+    /**
+     * @var Datetime $dateCreated The moment this resource was created
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+
+    /**
+     * @var Datetime $dateModified  The moment this resource last Modified
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
+
+    /**
+     * @var string The response received from the remote destination
+     *
+     * @Groups({"read"})
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $response;
+
+    /**
+     * @var string The username to login with when using auth parameters
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $username;
+
+    /**
+     * @var string The password to login with when using auth parameters
+     * @Groups({"write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $password;
+
+    /**
+     * @var string The digest needed to login with when using auth parameters
+     * @Groups({"write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $digest;
 
     public function getId(): ?Uuid
     {
@@ -107,10 +191,10 @@ class StufInterface
 
     public function getData(): ?array
     {
-        return $this->dataset;
+        return $this->data;
     }
 
-    public function setData(array $dataset): self
+    public function setData(array $data): self
     {
         $this->data = $data;
 
@@ -125,6 +209,17 @@ class StufInterface
     public function setRequestTemplate(string $requestTemplate): self
     {
     	$this->requestTemplate = $requestTemplate;
+
+        return $this;
+    }
+    public function getResponseTemplate(): ?string
+    {
+        return $this->responseTemplate;
+    }
+
+    public function setResponseTemplate(string $responseTemplate): self
+    {
+        $this->responseTemplate = $responseTemplate;
 
         return $this;
     }
@@ -146,10 +241,93 @@ class StufInterface
     	return $this->authentication;
     }
 
-    public function setAuthentication(array $dataset): self
+    public function setAuthentication(array $authentication): self
     {
     	$this->authentication = $authentication;
 
     	return $this;
+    }
+
+    public function getRequestMethod(): ?string
+    {
+        return $this->requestMethod;
+    }
+
+    public function setRequestMethod(string $requestMethod): self
+    {
+        $this->requestMethod = $requestMethod;
+
+        return $this;
+    }
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated= $dateCreated;
+
+        return $this;
+    }
+
+    public function getDateModified(): ?\DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(\DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
+
+        return $this;
+    }
+
+    public function getResponse(): ?string
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?string $response): self
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(?string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getDigest(): ?string
+    {
+        return $this->digest;
+    }
+
+    public function setDigest(?string $digest): self
+    {
+        $this->digest = $digest;
+
+        return $this;
     }
 }
