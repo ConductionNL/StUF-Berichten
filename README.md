@@ -1,22 +1,24 @@
 # Stuff service
 -------
 
-The stuf service aims to provide a broad interface for sending api request out of the commonground ecosystem. Do originally designed to serve the dutch stuf standard the interface by its nature can turn linkd-data json requests into single sets xml request. It can there be implemented into an (SOAP) xml service (including for example electronic billing).
+The stuf service aims to provide a broad interface for sending api request out of the commonground ecosystem. 
+Do originally designed to serve the dutch stuf standard the interface by its nature can turn linkd-data json requests into single sets xml request. It can there be implemented into an (SOAP) xml service (including for example electronic billing).
 
 ## Authenticating against your stuf endpoint
 
 If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
 
 ## Turning a (LD-)JSON request to XML
-sa
+
+In order 
 
 The chaining of call's is not yet supported (making several calls in order to render a single responce). It's definitly on our want list but we havn't yet found a donor willing to provide it. Sorry. 
 
 ## Turning XML to JSON
 
 The component provides three basic routes for receiving information back from an (soap) xml endpoint. 
-1.	Plain transformation (default): The XML data is serialized according to the provided �Accept� header. If no �Accept�  header is provided it is serialized to plain json if the provided  �Accept� header is �application/xml� the data is not serialized.
-2.	By mapping:
+1.	Plain transformation (default): The XML data is serialized according to the provided `Accept` header. If no `Accept`  header is provided it is serialized to plain json if the provided  `Accept` header is `application/xml` the data is not serialized.
+2.	By mapping: 
 3.	By templating:
 
 When using a stuff call that could return several commonground objects we recomond using a ld-json resonce (wich also happens to be the commongground default). It both supports the possiblity of returening sever objects of differend type in de _embeded property and profides the nifty @type property to keep them appart.  
@@ -27,8 +29,6 @@ You can add your own message templates to this service, since the service a susc
 
 
 ### Folder structure 
-
-### Template abstractions
 
 ### Using data from commonground sources
 
@@ -43,13 +43,14 @@ In a commonground or other linked data concept a object will regularu contain a 
 	'name':"Resource1",
 	'desciption':"This is my first resource",
 	'myMate':"https://some-component.domain.com/api/v1/5a922f48-e0c8-48e8-937a-e390867cc847",
-}
+},
 {
 	....
 	'name':"Resource2",
 	'desciption':"This is my secone resource",
 }
 ```
+
 We can then build the following twig (xml in this case template) and provide it with { data: resourece1}
 
 ```xml
@@ -66,7 +67,24 @@ We can then build the following twig (xml in this case template) and provide it 
 
 This way the stuff component only needs your starting point (resource) and can grap al the other resources that are needed to make a full stuf message on its own. Therby dramaticcly speeding up the development prossec
 
-000The enrichmentservices uses cashing to prefent "double" calls if the same resource is collected more then once.
+The enrichmentservices uses cashing to prefent "double" calls if the same resource is collected more then once.
+
+
+### Template abstractions
+
+Stuff mesagges tend to get enormos, with fast amounts of repeated resources and in the case of xml nodes. To prevent code dublication, improve project maintanance and make everything more readable we recomond using twig abstration. Or to put it more simple re use parts of your template by spiltiing of into small resuable block and in including them. This also works very wel with the option of loops. Let rewrite te above example in a slightly more abstract way. 
+
+```xml
+.....
+<resoruces>
+	<resource name="{{ data.name }}">
+		<description>{{ data.description }}></description>
+        {% for user in users %}
+        {% include '/request/example/resources/resource.html' with {'resource': commonground_resource(data.mate)} %}
+        {% endfor %}
+	</resource>
+</resoruces>
+```
 
 ### Authenticating agains commonground sources
 
