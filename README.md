@@ -44,7 +44,6 @@ In a commonground or other linked data concept a object will regularu contain a 
 	'name':"Resource2",
 	'desciption':"This is my secone resource",
 }
-```
 
 We can then build the following twig (xml in this case template) and provide it with { data: resourece1}
 
@@ -60,9 +59,9 @@ We can then build the following twig (xml in this case template) and provide it 
 </resoruces>
 ```
 
-This way the stuff component only needs your starting point (resource) and can grap al the other resources that are needed to make a full stuf message on its own. 
+This way the stuff component only needs your starting point (resource) and can grap al the other resources that are needed to make a full stuf message on its own. Therby dramaticcly speeding up the development prossec
 
-The enrichmentservices uses cashing to prefent "double" calls if the same resource is collected more then once.
+000The enrichmentservices uses cashing to prefent "double" calls if the same resource is collected more then once.
 
 ### Authenticating agains commonground sources
 
