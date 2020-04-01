@@ -11,7 +11,7 @@ The chaining of call's is not yet supported (making several calls in order to re
 ## Turning XML to JSON
 
 The component provides three basic routes for receiving information back from an (soap) xml endpoint. 
-1.	Plain transformation (default): The XML data is serialized according to the provided ‘Accept’ header. If no ‘Accept’  header is provided it is serialized to plain json if the provided  ‘Accept’ header is ‘application/xml’ the data is not serialized.
+1.	Plain transformation (default): The XML data is serialized according to the provided ï¿½Acceptï¿½ header. If no ï¿½Acceptï¿½  header is provided it is serialized to plain json if the provided  ï¿½Acceptï¿½ header is ï¿½application/xmlï¿½ the data is not serialized.
 2.	By mapping:
 3.	By templating:
 
@@ -44,7 +44,7 @@ In a commonground or other linked data concept a object will regularu contain a 
 	'name':"Resource2",
 	'desciption':"This is my secone resource",
 }
-
+```
 We can then build the following twig (xml in this case template) and provide it with { data: resourece1}
 
 ```xml
@@ -67,9 +67,9 @@ This way the stuff component only needs your starting point (resource) and can g
 
 In order for the stuf component to collect additional commonground data it needs acces to that data, from a security perspective the preffered way of doing this authorising the stuf component. This would also have the beniffit of cousing propper logging. 
 
-You can however for pratical reasons also opt for 'on behalve of authentication', in wisch case you profide the component with references for the specific endpoints that it needs on an domain basis (the assumption here being that one might need differend authentications for differend components and that components are hosted on domains). 
+You can however for practical reasons also opt for 'on behalve of authentication', in which case you provide the component with references for the specific endpoints that it needs on an domain basis (the assumption here being that one might need different authentications for different components and that components are hosted on domains). 
 
-Authentications schould be an array of authentication  objects.
+Authentications should be an array of authentication  objects.
 
 ```json
 {
@@ -94,7 +94,9 @@ Authentications schould be an array of authentication  objects.
 }
 ```
 
-If authentication has not been provided for an component the stuff component wil use its own authentication (as provided in the .env file)
+If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
+
+If authentication has not been provided for an component the StUF component wil use its own authentication (as provided in the .env file).
 
 ## License
 
