@@ -60,7 +60,6 @@ class StufInterface
      * @var array The headers to pass on when performing an request
      *
      * @Groups({"read", "write"})
-     * @Gedmo\
      * @ORM\Column(type="array")
      */
     private $headers = [];
