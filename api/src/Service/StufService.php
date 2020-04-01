@@ -14,7 +14,6 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class StufService
-
 {
     private $commonGroundService;
     private $templating;
@@ -23,14 +22,14 @@ class StufService
     private $serializer;
     private $client;
 
-    public function __construct(CommonGroundService $commonGroundService, Environment $twig, XmlEncoder $xmlEncoder, EntityManagerInterface $em, SerializerInterface $serializer, Client $client)
+    public function __construct(CommonGroundService $commonGroundService, Environment $twig, EntityManagerInterface $em, SerializerInterface $serializer)
     {
         $this->templating = $twig;
         $this->commonGroundService = $commonGroundService;
-        $this->xmlEncoder = $xmlEncoder;
+        $this->xmlEncoder = new XmlEncoder();
         $this->em = $em;
         $this->serializer = $serializer;
-        $this->client = $client;
+        $this->client = new Client();
     }
 
     public function request(StufInterface $request, $contentType, $renderType)

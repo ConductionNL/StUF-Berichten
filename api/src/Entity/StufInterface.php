@@ -130,6 +130,11 @@ class StufInterface
      */
     private $dateModified;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $response;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -249,6 +254,18 @@ class StufInterface
     public function setDateModified(\DateTimeInterface $dateModified): self
     {
         $this->dateModified = $dateModified;
+
+        return $this;
+    }
+
+    public function getResponse(): ?string
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?string $response): self
+    {
+        $this->response = $response;
 
         return $this;
     }
