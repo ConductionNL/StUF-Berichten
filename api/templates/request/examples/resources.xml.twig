@@ -1,0 +1,7 @@
+
+<resoruces>
+    <resource name="{{ data.name }}">
+        <description>{{ data.description }}></description>
+        {% include '/request/example/resources/resource.html' with {'resource': commonground_resource(data.mate)} %}
+    </resource>
+</resoruces>
