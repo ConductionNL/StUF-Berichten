@@ -8,13 +8,18 @@ Do originally designed to serve the Dutch stuf standard the interface by its nat
 
 If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
 
-## Turning a (LD-)JSON request to XML
+## Sending a request
 
-In order to create and
+In order to create and send an stuf request a REST JSON call should be made to the stuf interface endpoint. This call should at the lease contain 
+- The data that should be posted (that should preferably be as litle as an url to the commonground resource at the hard of the request).
+- The template used
+- Information on the stuf endpoint
+
+The stuf component wil the use the given template and data as a staroff point enriching both data and temple to render a message. The message wil then be posted (within an option soap envelope) to the stuff endpoint.  
 
 The chaining of call's is not yet supported (making several calls in order to render a single response). It's definitely on our want list but we haven’t yet found a donor willing to provide it. Sorry. 
 
-## Turning XML to JSON
+## Recieving a responce
 
 The component provides three basic routes for receiving information back from an (soap) xml endpoint. 
 1.	Plain transformation (default): The XML data is serialized according to the provided `Accept` header. If no `Accept`  header is provided it is serialized to plain json if the provided  `Accept` header is `application/xml` the data is not serialized.
@@ -27,10 +32,9 @@ When using a stuff call that could return several commonground objects we recomm
 
 You can add your own message templates to this service, since the service a susch is a community effort the preffered way of doing so would be to [create a branch]() and your templates and the start a pull request to provide your templates to others.
 
-
 ### Folder structure 
 
-Templates should be stored under the 
+Templates should be stored under the [api/templastes](/api/templates) folder in respactivly the [request](/api/template/request) or [responce](/api/template/responce) folder. Then in the GEMMA spefic folder (e.g. rgbz) and should be named after there GEMMA object or resource
 
 ### Using data from commonground sources
 
@@ -84,7 +88,7 @@ Stuff mesagges tend to get enormos, with fast amounts of repeated resources and 
 </resoruces>
 ```
 
-### Authenticating against commonground sources
+## Authenticating against commonground sources
 
 In order for the stuf component to collect additional commonground data it needs access to that data, from a security perspective the preferred way of doing this authorizing the stuf component. This would also have the benefit of causing proper logging. 
 
