@@ -21,6 +21,10 @@ When using a stuff call that could return several commonground objects we recomo
 
 You can add your own message templates to this service, since the service a susch is a community effort the preffered way of doing so would be to [create a branch]() and your templates and the start a pull request to provide your templates to others.
 
+### Authentication against receiver
+
+If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
+
 ### Folder structure 
 
 ### Template abstractions
@@ -93,8 +97,6 @@ Authentications should be an array of authentication  objects.
 	]
 }
 ```
-
-If the receiver of the message requires a username/password authentication, the entity contains properties for them, of which the password property will not be shown when requesting the entity. These parameters will be passed on as basic auth, except when also the 'digest' property is set, then the component will pass it on as digest authentication.
 
 If authentication has not been provided for an component the StUF component wil use its own authentication (as provided in the .env file).
 
