@@ -89,12 +89,22 @@ class StufMessage
     /**
      * @ORM\Column(type="json")
      */
-    private $dataset = [];
+    private $data = [];
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $template;
+    
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $mapping = [];
+    
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $authentication = [];
 
     public function getId(): ?int
     {
@@ -125,14 +135,14 @@ class StufMessage
         return $this;
     }
 
-    public function getDataset(): ?array
+    public function getData(): ?array
     {
         return $this->dataset;
     }
 
-    public function setDataset(array $dataset): self
+    public function setData(array $dataset): self
     {
-        $this->dataset = $dataset;
+        $this->data = $data;
 
         return $this;
     }
@@ -147,5 +157,29 @@ class StufMessage
         $this->template = $template;
 
         return $this;
+    }
+    
+    public function getMapping(): ?array
+    {
+    	return $this->mapping;
+    }
+    
+    public function setMapping(array $dataset): self
+    {
+    	$this->mapping = $mapping;
+    	
+    	return $this;
+    }
+    
+    public function getAuthentication(): ?array
+    {
+    	return $this->authentication;
+    }
+    
+    public function setAuthentication(array $dataset): self
+    {
+    	$this->authentication = $authentication;
+    	
+    	return $this;
     }
 }
