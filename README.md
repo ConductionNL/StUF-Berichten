@@ -98,7 +98,7 @@ If authentication has not been provided for an component the stuff component wil
 
 ## License
 
-Copyright &copy; [Gemeente Utrecht](https://www.utrecht.nl/)  2019 
+Copyright &copy; [Gemeente Utrecht](https://www.utrecht.nl/)  2020 
 
 Licensed under [EUPL](https://github.com/ConductionNL/trouwencomponent/blob/master/LICENSE.md)
 
