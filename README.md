@@ -10,6 +10,8 @@ If the receiver of the message requires a username/password authentication, the 
 
 ## Sending a request
 
+Also read the [redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/ConductionNL/stufservice/master/api/public/schema/openapi.yaml).
+
 In order to create and send an stuf request a REST JSON call should be made to the stuf interface endpoint. This call should at the lease contain 
 - The data that should be posted (that should preferably be as litle as an url to the commonground resource at the hard of the request).
 - The template used
@@ -23,8 +25,8 @@ The chaining of call's is not yet supported (making several calls in order to re
 
 The component provides three basic routes for receiving information back from an (soap) xml endpoint. 
 1.	Plain transformation (default): The XML data is serialized according to the provided `Accept` header. If no `Accept`  header is provided it is serialized to plain json if the provided  `Accept` header is `application/xml` the data is not serialized.
-2.	By mapping: 
-3.	By templating:
+2.	By mapping: `Not yet supported`
+3.	By templating: 
 
 When using a stuff call that could return several commonground objects we recommend using a ld-json response (wich also happens to be the commongground default). It both supports the possibility of returning sever objects of different type in de _embeded property and provides the nifty @type property to keep them apart.  
 
