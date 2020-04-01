@@ -110,7 +110,7 @@ class StufInterface
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private $requestMethod;
+    private $requestMethod = 'POST';
 
     /**
      * @var Datetime $dateCreated The moment this resource was created
