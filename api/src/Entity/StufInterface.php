@@ -30,6 +30,7 @@ use Doctrine\Common\Collections\Criteria;
  *     }
  * )
  * @ORM\Entity()
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  */
 class StufInterface
 {
@@ -48,26 +49,42 @@ class StufInterface
     private $destination;
 
     /**
+     * @var headers The headers to pass on when performing an request
+     *
+     * @Groups({"read", "write"})
+     * @Gedmo\
      * @ORM\Column(type="array")
      */
     private $headers = [];
 
     /**
+     * @var data The data to be passed on as StUF
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="json")
      */
     private $data = [];
 
     /**
+     * @var template The template to use to create the StUF message
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $template;
 
     /**
+     * @var mapping
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="json")
      */
     private $mapping = [];
 
     /**
+     * @var authentication
+     *
+     * @Groups({"write"})
      * @ORM\Column(type="json")
      */
     private $authentication = [];
