@@ -5,6 +5,9 @@ namespace App\Service;
 
 use App\Entity\StufInterface;
 use App\Service\CommonGroundService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Twig\Environment;
 use GuzzleHttp\Client;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -18,14 +21,16 @@ class StufService
     private $xmlEncoder;
     private $em;
     private $serializer;
+    private $client;
 
-    public function __construct(CommonGroundService $commonGroundService, Environment $twig, XmlEncoder $xmlEncoder, EntityManagerInterface $em, SerializerInterface $serializer)
+    public function __construct(CommonGroundService $commonGroundService, Environment $twig, XmlEncoder $xmlEncoder, EntityManagerInterface $em, SerializerInterface $serializer, Client $client)
     {
         $this->templating = $twig;
         $this->commonGroundService = $commonGroundService;
         $this->xmlEncoder = $xmlEncoder;
         $this->em = $em;
         $this->serializer = $serializer;
+        $this->client = $client;
     }
 
     public function request(StufInterface $request, $contentType, $renderType)
@@ -46,9 +51,9 @@ class StufService
         if($statusCode == 200 || $statusCode == 201) {
             try {
                 //First, we assume that we are parsing XML, so lets try that first
-                $result = $this->xmlEncoder->decode($response);
+                $result = $this->xmlEncoder->decode($response, 'array');
                 $encodedResult = $response;
-            }catch(NotEncodableError $e){
+            }catch(NotEncodableValueException $e){
                 //Else, let's check if the response if json
                 $result = json_decode($response, true);
                 if($result == null){
@@ -82,7 +87,7 @@ class StufService
                 $renderType, ['enable_max_depth' => true]
             );
         }
-        $request->setResponse($return);
+//        $request->setResponse($return);
         $this->em->persist($request);
         $this->em->flush();
         return $request;
