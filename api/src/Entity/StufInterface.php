@@ -89,6 +89,11 @@ class StufInterface
      */
     private $authentication = [];
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $requestMethod;
+
     public function getId(): ?Uuid
     {
         return $this->id;
@@ -164,5 +169,17 @@ class StufInterface
     	$this->authentication = $authentication;
 
     	return $this;
+    }
+
+    public function getRequestMethod(): ?string
+    {
+        return $this->requestMethod;
+    }
+
+    public function setRequestMethod(string $requestMethod): self
+    {
+        $this->requestMethod = $requestMethod;
+
+        return $this;
     }
 }
