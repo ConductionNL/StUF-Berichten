@@ -84,7 +84,7 @@ class StufInterface
      * @var string The template to use to create the StUF message
      *
      * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $responseTemplate;
 
