@@ -52,7 +52,6 @@ class StufInterface
      * @var string The destination url of the request
      *
      * @Groups({"read", "write"})
-     * @Gedmo\
      * @ORM\Column(type="array")
      */
     private $destination;
