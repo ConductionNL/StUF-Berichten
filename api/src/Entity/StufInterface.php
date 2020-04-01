@@ -139,16 +139,23 @@ class StufInterface
     private $response;
 
     /**
+     * @var string The username to login with when using auth parameters
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $username;
 
     /**
+     * @var string The password to login with when using auth parameters
+     * @Groups({"write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $password;
 
     /**
+     * @var string The digest needed to login with when using auth parameters
+     * @Groups({"write"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $digest;
