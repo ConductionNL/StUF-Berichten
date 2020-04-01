@@ -71,7 +71,12 @@ class StufInterface
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
-    private $template;
+    private $requestTemplate;
+    
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $responceTemplate;
 
     /**
      * @var mapping
@@ -135,14 +140,14 @@ class StufInterface
         return $this;
     }
 
-    public function getTemplate(): ?string
+    public function getRequestTemplate(): ?string
     {
-        return $this->template;
+    	return $this->requestTemplate;
     }
 
-    public function setTemplate(string $template): self
+    public function setRequestTemplate(string $requestTemplate): self
     {
-        $this->template = $template;
+    	$this->requestTemplate = $requestTemplate;
 
         return $this;
     }
