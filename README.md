@@ -30,6 +30,8 @@ You can add your own message templates to this service, since the service a susc
 
 ### Folder structure 
 
+Templates should be stored under the 
+
 ### Using data from commonground sources
 
 The challange with the linked data concept of commonground is that alle the data that you need for a single message stuff call (wich historicallly need a complete dataset) is divided agains multiple api's. To preffent applications doing broad fatches before an call to the stuff component, the component itszelf provides an enrichment service as a twig template function. his helps developers.
