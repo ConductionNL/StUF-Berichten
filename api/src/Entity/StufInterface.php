@@ -46,10 +46,19 @@ class StufInterface
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
+    private $id;
+
+    /**
+     * @var string The destination url of the request
+     *
+     * @Groups({"read", "write"})
+     * @Gedmo\
+     * @ORM\Column(type="array")
+     */
     private $destination;
 
     /**
-     * @var headers The headers to pass on when performing an request
+     * @var array The headers to pass on when performing an request
      *
      * @Groups({"read", "write"})
      * @Gedmo\
@@ -58,7 +67,7 @@ class StufInterface
     private $headers = [];
 
     /**
-     * @var data The data to be passed on as StUF
+     * @var array The data to be passed on as StUF
      *
      * @Groups({"read", "write"})
      * @ORM\Column(type="json")
@@ -66,20 +75,23 @@ class StufInterface
     private $data = [];
 
     /**
-     * @var template The template to use to create the StUF message
+     * @var string The template to use to create the StUF message
      *
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $requestTemplate;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $responceTemplate;
 
     /**
-     * @var mapping
+     * @var string The template to use to create the StUF message
+     *
+     * @Groups({"read", "write"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $responseTemplate;
+
+    /**
+     * @var array
      *
      * @Groups({"read", "write"})
      * @ORM\Column(type="json")
@@ -87,7 +99,7 @@ class StufInterface
     private $mapping = [];
 
     /**
-     * @var authentication
+     * @var array
      *
      * @Groups({"write"})
      * @ORM\Column(type="json")
@@ -95,9 +107,30 @@ class StufInterface
     private $authentication = [];
 
     /**
+     * @var string The HTTP method to use
+     *
+     * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
     private $requestMethod;
+
+    /**
+     * @var Datetime $dateCreated The moment this resource was created
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+
+    /**
+     * @var Datetime $dateModified  The moment this resource last Modified
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     public function getId(): ?Uuid
     {
@@ -130,10 +163,10 @@ class StufInterface
 
     public function getData(): ?array
     {
-        return $this->dataset;
+        return $this->data;
     }
 
-    public function setData(array $dataset): self
+    public function setData(array $data): self
     {
         $this->data = $data;
 
@@ -148,6 +181,17 @@ class StufInterface
     public function setRequestTemplate(string $requestTemplate): self
     {
     	$this->requestTemplate = $requestTemplate;
+
+        return $this;
+    }
+    public function getResponseTemplate(): ?string
+    {
+        return $this->responseTemplate;
+    }
+
+    public function setResponseTemplate(string $responseTemplate): self
+    {
+        $this->responseTemplate = $responseTemplate;
 
         return $this;
     }
@@ -169,7 +213,7 @@ class StufInterface
     	return $this->authentication;
     }
 
-    public function setAuthentication(array $dataset): self
+    public function setAuthentication(array $authentication): self
     {
     	$this->authentication = $authentication;
 
@@ -184,6 +228,29 @@ class StufInterface
     public function setRequestMethod(string $requestMethod): self
     {
         $this->requestMethod = $requestMethod;
+
+        return $this;
+    }
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated= $dateCreated;
+
+        return $this;
+    }
+
+    public function getDateModified(): ?\DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(\DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
 
         return $this;
     }
