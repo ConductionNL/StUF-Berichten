@@ -41,13 +41,13 @@ In a commonground or other linked data concept an object will regular contain a 
 
 ```json
 {
-	'name':"Resource1",
-	'description':"This is my first resource",
-	'myMate':"https://some-component.domain.com/api/v1/5a922f48-e0c8-48e8-937a-e390867cc847",
+	"name":"Resource1",
+	"description":"This is my first resource",
+	"myMate":"https://some-component.domain.com/api/v1/5a922f48-e0c8-48e8-937a-e390867cc847",
 },
 {
-	'name':"Resource2",
-	' description ':"This is my secone resource",
+	"name":"Resource2",
+	"description":"This is my secone resource",
 }
 ```
 
@@ -94,21 +94,21 @@ Authentications should be an array of authentication  objects.
 
 ```json
 {
-	'authentication':[
+	"authentication":[
 		{
 			// the stuff component will use {url}* to determine if this authentication should be used for a component
-			'url':'string',
+			"url":"string",
 			// the value for the authentication header
-			'authentication':'',
+			"authentication":"string",
 			// if authentication is not provided, information for the creation of a json web token to be set as authentication header
-			'client_id':'string',
-			'secret':string',
+			"client_id":"string",
+			"secret":"string",
 		},
 		{
-			'url':'string',
-			'authentication':'',
-			'client_id':'string',
-			'secret':string',
+			"url":"string",
+			"authentication":"string",
+			"client_id":"string",
+			"secret":"string",
 		}
 	]
 }
