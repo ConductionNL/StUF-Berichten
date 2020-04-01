@@ -62,22 +62,23 @@ class StufSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
+        
+        
         $encoder = new XmlEncoder();
         if($method != Request::METHOD_POST && $route != 'api_stuf_message_post_collection' && $route != 'api_stuf_message_post_stuf_collection'){
             return;
         }
-//        elseif($route=='api_stuf_message_post_stuf_collection'){
-//            $result = $encoder->decode($event->getRequest()->request, 'array');
-//
-//            $response = $this->commonGroundService->createResource($result, $event->getRequest()->query->get('destination'));
-//
-//
-//
-//        }
+        
+        // Gettting the entity
+        $request = $event->getControllerResult();
+        
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
         switch ($contentType) {
+        	case 'application/xml':
+        		$renderType = 'json';
+        		break;
             case 'application/json':
                 $renderType = 'json';
                 break;
@@ -91,18 +92,17 @@ class StufSubscriber implements EventSubscriberInterface
                 $contentType = 'application/ld+json';
                 $renderType = 'jsonld';
         }
-        //var_dump($route);
-        $request = json_decode($event->getRequest()->request,true);
-
-        $destination = $request['destination'];
-        $headers = $request['headers'];
-        $dataset = $request['dataset'];
-        $template = $request['template'];
-
-        $template = $this->templating->createTemplate('requests/'.$template);
-        $message = $template->render($dataset);
-        $proces = 'POST';
-        $response = $this->client->request($proces, $destination, ['headers'=>$headers, 'body'=>$message]);
+        
+        // stuf service
+        $request = $this->stufService->request($request, $contentType, $renderType);
+        
+        //ipv dit
+		/*
+        $template = $this->templating->createTemplate('requests/'.$request->getTemplate());
+        $message = $template->render($request->getData());
+        
+       //$proces = 'POST';
+        $response = $this->client->request($request->getMethod(), $destination, ['headers'=>$headers, 'body'=> $message]);
 
         $respContentType = $response->getHeader('Content-Type');
         $statusCode = $response->getStatusCode();
@@ -125,10 +125,12 @@ class StufSubscriber implements EventSubscriberInterface
             $result,
             $renderType, ['enable_max_depth' => true]
         );
-
+		*/
+ 
+        
         // Creating a response
         $response = new Response(
-            $json,
+        	$request->getReponce(),
             Response::HTTP_CREATED,
             ['content-type' => $contentType]
         );
