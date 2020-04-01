@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\StufMessage;
+use App\Entity\StufInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method StufMessage|null find($id, $lockMode = null, $lockVersion = null)
- * @method StufMessage|null findOneBy(array $criteria, array $orderBy = null)
- * @method StufMessage[]    findAll()
- * @method StufMessage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method StufInterface|null find($id, $lockMode = null, $lockVersion = null)
+ * @method StufInterface|null findOneBy(array $criteria, array $orderBy = null)
+ * @method StufInterface[]    findAll()
+ * @method StufInterface[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class StufMessageRepository extends ServiceEntityRepository
+class StufInterfaceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, StufMessage::class);
+        parent::__construct($registry, StufInterface::class);
     }
 
     // /**
-    //  * @return StufMessage[] Returns an array of StufMessage objects
+    //  * @return StufInterface[] Returns an array of StufInterface objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class StufMessageRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?StufMessage
+    public function findOneBySomeField($value): ?StufInterface
     {
         return $this->createQueryBuilder('s')
             ->andWhere('s.exampleField = :val')
