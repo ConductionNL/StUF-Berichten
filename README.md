@@ -41,13 +41,11 @@ In a commonground or other linked data concept an object will regular contain a 
 
 ```json
 {
-	....
 	'name':"Resource1",
 	'description':"This is my first resource",
 	'myMate':"https://some-component.domain.com/api/v1/5a922f48-e0c8-48e8-937a-e390867cc847",
 },
 {
-	....
 	'name':"Resource2",
 	' description ':"This is my secone resource",
 }
@@ -56,7 +54,6 @@ In a commonground or other linked data concept an object will regular contain a 
 We can then build the following twig (xml in this case template) and provide it with { data: resourece1}
 
 ```xml
-.....
 <resoruces>
 	<resource name="{{ data.name }}">
 		<description>{{ data. description }}></description>
@@ -77,7 +74,6 @@ The enrichment services uses cashing to prevent "double" calls if the same resou
 Stuff mesagges tend to get enormos, with fast amounts of repeated resources and in the case of xml nodes. To prevent code dublication, improve project maintanance and make everything more readable we recomond using twig abstration. Or to put it more simple re use parts of your template by spiltiing of into small resuable block and in including them. This also works very wel with the option of loops. Let rewrite te above example in a slightly more abstract way. 
 
 ```xml
-.....
 <resoruces>
 	<resource name="{{ data.name }}">
 		<description>{{ data. description }}></description>
@@ -98,7 +94,6 @@ Authentications should be an array of authentication  objects.
 
 ```json
 {
-	....
 	'authentication':[
 		{
 			// the stuff component will use {url}* to determine if this authentication should be used for a component
