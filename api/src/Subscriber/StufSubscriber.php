@@ -38,17 +38,17 @@ class StufSubscriber implements EventSubscriberInterface
 
     public function stuf(RequestEvent $event)
     {
-        $result = $event->getControllerResult();
+//        $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
 
-        if($method != Request::METHOD_POST && !($result instanceof StufInterface)){
+        if($method != Request::METHOD_POST && !strpos($route, 'stuf_interfaces') ){
             return;
         }
 
         // Gettting the entity
-        $request = $event->getControllerResult();
+//        $request = $event->getControllerResult();
 
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
