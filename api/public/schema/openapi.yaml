@@ -8,7 +8,7 @@ info:
     - Reference: stuf
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online](https://github.com/ConductionNL/proto-component) / [zip](https://github.com/ConductionNL/proto-component/archive/master.zip)
+    - Repository: [online](https://github.com/ConductionNL/stufservice) / [zip](https://github.com/ConductionNL/stufservice/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
@@ -2061,6 +2061,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         request:
           readOnly: true
           description: 'The id of the request within that application'
@@ -2191,6 +2192,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         request:
           readOnly: true
           description: 'The id of the request within that application'
@@ -2322,6 +2324,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         action:
           readOnly: true
           type: string
@@ -2382,6 +2385,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         action:
           readOnly: true
           type: string
@@ -2439,22 +2443,31 @@ components:
       properties:
         id:
           readOnly: true
-          type: string
-        destination:
-          readOnly: true
           description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        destination:
+          description: 'The destination url of the request'
+          type: array
+          items:
+            type: string
         headers:
+          description: 'The headers to pass on when performing an request'
           type: array
           items:
             type: string
         data:
+          description: 'The data to be passed on as StUF'
           type: array
           items:
             type: string
-        template:
+        requestTemplate:
+          description: 'The template to use to create the StUF message'
+          type: string
+        responseTemplate:
+          description: 'The template to use to create the StUF message'
           type: string
         mapping:
           type: array
@@ -2464,6 +2477,29 @@ components:
           type: array
           items:
             type: string
+        requestMethod:
+          description: 'The HTTP method to use'
+          type: string
+        dateCreated:
+          description: 'The moment this resource was created'
+          type: string
+          format: date-time
+        dateModified:
+          description: 'The moment this resource last Modified'
+          type: string
+          format: date-time
+        response:
+          description: 'The response received from the remote destination'
+          type: string
+        username:
+          description: 'The username to login with when using auth parameters'
+          type: string
+        password:
+          description: 'The password to login with when using auth parameters'
+          type: string
+        digest:
+          description: 'The digest needed to login with when using auth parameters'
+          type: string
     'StufInterface:jsonld':
       type: object
       description: ''
@@ -2479,22 +2515,31 @@ components:
           type: string
         id:
           readOnly: true
-          type: string
-        destination:
-          readOnly: true
           description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        destination:
+          description: 'The destination url of the request'
+          type: array
+          items:
+            type: string
         headers:
+          description: 'The headers to pass on when performing an request'
           type: array
           items:
             type: string
         data:
+          description: 'The data to be passed on as StUF'
           type: array
           items:
             type: string
-        template:
+        requestTemplate:
+          description: 'The template to use to create the StUF message'
+          type: string
+        responseTemplate:
+          description: 'The template to use to create the StUF message'
           type: string
         mapping:
           type: array
@@ -2504,6 +2549,29 @@ components:
           type: array
           items:
             type: string
+        requestMethod:
+          description: 'The HTTP method to use'
+          type: string
+        dateCreated:
+          description: 'The moment this resource was created'
+          type: string
+          format: date-time
+        dateModified:
+          description: 'The moment this resource last Modified'
+          type: string
+          format: date-time
+        response:
+          description: 'The response received from the remote destination'
+          type: string
+        username:
+          description: 'The username to login with when using auth parameters'
+          type: string
+        password:
+          description: 'The password to login with when using auth parameters'
+          type: string
+        digest:
+          description: 'The digest needed to login with when using auth parameters'
+          type: string
 definitions:
   AuditTrail-read:
     properties:
@@ -2609,12 +2677,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-04-21 13:34:43'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-04-21 13:34:43'
     required: []
   AuditTrail-write:
     properties:
@@ -2623,14 +2691,6 @@ definitions:
         type: string
         example: 'This log line looks suspicius'
         maxLength: 2555
-    required: []
-  StufInterface-read:
-    properties:
-      destination:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
     required: []
   ChangeLog-read:
     properties:
@@ -2670,12 +2730,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-04-21 13:34:43'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-04-21 13:34:43'
     required: []
   ChangeLog-write:
     properties:
@@ -2685,9 +2745,92 @@ definitions:
         example: 'This log line is suspicius'
         maxLength: 2555
     required: []
+  StufInterface-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      destination:
+        description: 'The destination url of the request'
+        type: string
+      headers:
+        description: 'The headers to pass on when performing an request'
+        type: array
+      data:
+        description: 'The data to be passed on as StUF'
+        type: array
+      requestTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      responseTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      mapping:
+        description: ''
+        type: array
+      requestMethod:
+        description: 'The HTTP method to use'
+        type: string
+      dateCreated:
+        description: 'The moment this resource was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this resource last Modified'
+        type: \Datetime
+      response:
+        description: 'The response received from the remote destination'
+        type: string
+      username:
+        description: 'The username to login with when using auth parameters'
+        type: string
+    required: []
+  StufInterface-write:
+    properties:
+      destination:
+        description: 'The destination url of the request'
+        type: string
+      headers:
+        description: 'The headers to pass on when performing an request'
+        type: array
+      data:
+        description: 'The data to be passed on as StUF'
+        type: array
+      requestTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      responseTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      mapping:
+        description: ''
+        type: array
+      authentication:
+        description: ''
+        type: array
+      requestMethod:
+        description: 'The HTTP method to use'
+        type: string
+      username:
+        description: 'The username to login with when using auth parameters'
+        type: string
+      password:
+        description: 'The password to login with when using auth parameters'
+        type: string
+      digest:
+        description: 'The digest needed to login with when using auth parameters'
+        type: string
+    required: []
 tags:
   -
     name: AuditTrail
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
+  -
+    name: ChangeLog
     description: |
       An resource representing a log line.
       
@@ -2698,32 +2841,26 @@ tags:
       
       
       
-  -
-    name: ChangeLog
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the StufInterface resource'
+      write: 'write right to the StufInterface resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ChangeLog resource'
-      write: 'write right to the ChangeLog resource'
+      read: 'read right to the StufInterface resource'
+      write: 'write right to the StufInterface resource'
 host: irc.zaakonline.nl
 servers:
   -
-    description: 'Demo Omgeving'
-    url: 'http://proto.demo.common-ground.dev'
+    name: conduction.nl
+    url: stuf.dev.conduction.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
