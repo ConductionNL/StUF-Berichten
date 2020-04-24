@@ -9,7 +9,7 @@ info:
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/stufservice) / [zip](https://github.com/ConductionNL/stufservice/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/stuf-php) 
     - Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -2677,12 +2677,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-21 13:34:43'
+        example: '2020-04-24 11:24:33'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-21 13:34:43'
+        example: '2020-04-24 11:24:33'
     required: []
   AuditTrail-write:
     properties:
@@ -2730,12 +2730,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-21 13:34:43'
+        example: '2020-04-24 11:24:33'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-21 13:34:43'
+        example: '2020-04-24 11:24:33'
     required: []
   ChangeLog-write:
     properties:
