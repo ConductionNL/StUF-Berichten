@@ -4,7 +4,7 @@
 namespace App\Service;
 
 use App\Entity\StufInterface;
-use App\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
