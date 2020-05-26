@@ -30,7 +30,7 @@ use Doctrine\Common\Collections\Criteria;
  *     }
  * )
  * @ORM\Entity()
- * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
+ * @Gedmo\Loggable(logEntryClass="Conduction\CommonGroundBundle\Entity\ChangeLog")
  */
 class StufInterface
 {
