@@ -1,17 +1,16 @@
 <?php
 
-
 namespace App\Service;
 
 use App\Entity\StufInterface;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Twig\Environment;
 use GuzzleHttp\Client;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
+use Twig\Environment;
 
 class StufService
 {
@@ -36,14 +35,14 @@ class StufService
     {
 
         //To render the request
-        $template = $this->templating->createTemplate('requests/' . $request->getRequestTemplate());
+        $template = $this->templating->createTemplate('requests/'.$request->getRequestTemplate());
         $message = $template->render($request->getData());
 
         //To send the request
-        if($username = $request->getUsername() && $password = $request->getPassword()){
+        if ($username = $request->getUsername() && $password = $request->getPassword()) {
             $auth = [$username, $password, $request->getDigest()];
             $response = $this->client->request($request->getRequestMethod(), $request->getDestination(), ['headers' => $request->getHeaders(), 'auth'=>$auth, 'body' => $message]);
-        }else{
+        } else {
             $response = $this->client->request($request->getRequestMethod(), $request->getDestination(), ['headers' => $request->getHeaders(), 'body' => $message]);
         }
 
@@ -52,21 +51,20 @@ class StufService
         $statusCode = $response->getStatusCode();
         $response = $response->getBody();
 
-        if($statusCode == 200 || $statusCode == 201) {
+        if ($statusCode == 200 || $statusCode == 201) {
             try {
                 //First, we assume that we are parsing XML, so lets try that first
                 $result = $this->xmlEncoder->decode($response, 'array');
                 $encodedResult = $response;
-            }catch(NotEncodableValueException $e){
+            } catch (NotEncodableValueException $e) {
                 //Else, let's check if the response if json
                 $result = json_decode($response, true);
-                if($result == null){
+                if ($result == null) {
                     //The response is neither XML nor JSON, so we need to throw an error
                     throw new BadRequestHttpException();
                 }
             }
-        }
-        else{
+        } else {
             http_response_code($statusCode);
             var_dump($request->getRequestMethod().' returned:'.$statusCode);
             var_dump($request->getHeaders());
@@ -76,24 +74,26 @@ class StufService
             die;
         }
         //If a response template is set, render it
-        if($responseTemplate = $request->getResponseTemplate() != null){
-            $template = $this->templating->createTemplate('responses/'/$responseTemplate);
+        if ($responseTemplate = $request->getResponseTemplate() != null) {
+            $template = $this->templating->createTemplate('responses/' / $responseTemplate);
             $return = $template->render($result);
         }
         //Pass the result on if the accept header asks for XML and the response was XML
-        elseif($contentType == 'application/xml' && isset($encodedResult)){
+        elseif ($contentType == 'application/xml' && isset($encodedResult)) {
             $return = $encodedResult;
         }
         //Use the default serializer
-        else{
+        else {
             $return = $this->serializer->serialize(
                 $result,
-                $renderType, ['enable_max_depth' => true]
+                $renderType,
+                ['enable_max_depth' => true]
             );
         }
         $request->setResponse($return);
         $this->em->persist($request);
         $this->em->flush();
+
         return $request;
     }
 }
