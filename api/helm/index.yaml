@@ -1,0 +1,16 @@
+apiVersion: v1
+entries:
+  stuf:
+  - apiVersion: v1
+    appVersion: V.0.1
+    created: "2020-06-04T14:12:06.936960144Z"
+    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
+      interface beschikbaar.&#039;'
+    digest: 1aa09aba5df6f60dfce792e20cf3ae9e1026834742f03d3255de6c2fea210f8c
+    home: pc.zaakonline.nl
+    icon: pc.zaakonline.nl
+    name: stuf
+    urls:
+    - stuf-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-06-04T14:12:06.922425644Z"

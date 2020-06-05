@@ -1,17 +1,14 @@
 <?php
 
-
 namespace App\Subscriber;
 
-
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\StufInterface;
 use App\Service\StufService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -23,7 +20,6 @@ class StufSubscriber implements EventSubscriberInterface
 
     public function __construct(ParameterBagInterface $params, EntityManagerInterface $em, StufService $stufService)
     {
-
         $this->params = $params;
         $this->em = $em;
         $this->stufService = $stufService;
@@ -43,7 +39,7 @@ class StufSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
 
-        if($method != Request::METHOD_POST && !strpos($route, 'stuf_interfaces') ){
+        if ($method != Request::METHOD_POST && !strpos($route, 'stuf_interfaces')) {
             return;
         }
 
@@ -54,9 +50,9 @@ class StufSubscriber implements EventSubscriberInterface
             $contentType = $event->getRequest()->headers->get('Accept');
         }
         switch ($contentType) {
-        	case 'application/xml':
-        		$renderType = 'json';
-        		break;
+            case 'application/xml':
+                $renderType = 'json';
+                break;
             case 'application/json':
                 $renderType = 'json';
                 break;
@@ -76,7 +72,7 @@ class StufSubscriber implements EventSubscriberInterface
 
         // Creating a response
         $response = new Response(
-        	$request->getReponse(),
+            $request->getReponse(),
             Response::HTTP_CREATED,
             ['content-type' => $contentType]
         );
