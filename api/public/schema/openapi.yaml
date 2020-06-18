@@ -400,6 +400,15 @@ paths:
             type: integer
             default: 1
         -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
           name: Authorization
           description: 'The JWT of the entity performing the request'
           in: header
@@ -1296,6 +1305,15 @@ paths:
           schema:
             type: integer
             default: 1
+        -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -2760,12 +2778,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-04 14:17:12'
+        example: '2020-06-18 11:08:10'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-04 14:17:12'
+        example: '2020-06-18 11:08:10'
     required: []
   AuditTrail-write:
     properties:
@@ -2813,12 +2831,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-04 14:17:12'
+        example: '2020-06-18 11:08:10'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-04 14:17:12'
+        example: '2020-06-18 11:08:10'
     required: []
   ChangeLog-write:
     properties:
