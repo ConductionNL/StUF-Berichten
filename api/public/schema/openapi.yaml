@@ -1306,6 +1306,15 @@ paths:
             type: integer
             default: 1
         -
+          name: limit
+          in: query
+          required: false
+          description: 'The number of items per page'
+          schema:
+            type: integer
+            default: 30
+            minimum: 0
+        -
           name: Authorization
           description: 'The JWT of the entity performing the request'
           in: header
@@ -2070,114 +2079,114 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        application:
+          writeOnly: true
+          description: 'The application that made the request'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         request:
-          readOnly: true
           description: 'The id of the request within that application'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         user:
-          readOnly: true
           description: 'The user on behalf of wich the request was made'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         subject:
-          readOnly: true
           description: '???'
           type: string
+          nullable: true
         process:
-          readOnly: true
           description: 'The procces on behalf of wich the request was made'
           type: string
+          nullable: true
         dataElements:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         dataSubjects:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         resource:
-          readOnly: true
           description: 'The resource that was requested'
           type: string
+          nullable: true
         resourceType:
-          readOnly: true
           description: 'The type of the resource that was requested'
           type: string
+          nullable: true
         route:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         endpoint:
-          readOnly: true
           description: 'The endpoint that the request was made to'
           type: string
         method:
-          readOnly: true
           description: 'The method that was used'
           type: string
         accept:
-          readOnly: true
           description: 'The contentType that was reqousted'
           type: string
         contentType:
-          readOnly: true
           description: 'The contentType that was suplieds'
           type: string
         content:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         ip:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         headers:
-          readOnly: true
           description: 'The headers supplied by client'
           type: array
           items:
             type: string
         statusCode:
-          readOnly: true
           description: 'The status code returned to client'
           type: integer
+          nullable: true
         notFound:
-          readOnly: true
           description: 'Whether or not the reqousted endpoint was found'
           type: boolean
+          nullable: true
         forbidden:
-          readOnly: true
           description: 'Whether or not the client was allowed to the reqousted endpoint'
           type: boolean
+          nullable: true
         ok:
-          readOnly: true
           description: 'Whether or not there where any problems'
           type: boolean
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     AuditTrail-write:
       type: object
       description: 'An resource representing a log line.'
@@ -2332,24 +2341,20 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         action:
-          readOnly: true
           type: string
         objectId:
-          readOnly: true
           type: string
+          nullable: true
         objectClass:
-          readOnly: true
           type: string
         version:
-          readOnly: true
           type: integer
         data:
-          readOnly: true
           type: array
           items:
             type: string
+          nullable: true
         username:
-          readOnly: true
           type: string
         session:
           readOnly: true
@@ -2392,43 +2397,40 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         action:
-          readOnly: true
           type: string
         objectId:
-          readOnly: true
           type: string
+          nullable: true
         objectClass:
-          readOnly: true
           type: string
         version:
-          readOnly: true
           type: integer
         data:
-          readOnly: true
           type: array
           items:
             type: string
+          nullable: true
         username:
-          readOnly: true
           type: string
+          nullable: true
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     'ChangeLog:jsonld-write':
       type: object
       description: 'An resource representing a log line.'
@@ -2448,23 +2450,33 @@ components:
       properties:
         id:
           readOnly: true
-          type: string
-        destination:
-          readOnly: true
           description: 'The UUID identifier of this object'
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        destination:
+          description: 'The destination url of the request'
+          type: array
+          items:
+            type: string
         headers:
+          description: 'The headers to pass on when performing an request'
           type: array
           items:
             type: string
         data:
+          description: 'The data to be passed on as StUF'
           type: array
           items:
             type: string
-        template:
+        requestTemplate:
+          description: 'The template to use to create the StUF message'
           type: string
+        responseTemplate:
+          description: 'The template to use to create the StUF message'
+          type: string
+          nullable: true
         mapping:
           type: array
           items:
@@ -2495,11 +2507,19 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        destination:
+          description: 'The destination url of the request'
+          type: array
+          items:
+            type: string
         headers:
+          description: 'The headers to pass on when performing an request'
           type: array
           items:
             type: string
         data:
+          description: 'The data to be passed on as StUF'
           type: array
           items:
             type: string
@@ -2514,6 +2534,83 @@ components:
           items:
             type: string
 definitions:
+  StufInterface-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      destination:
+        description: 'The destination url of the request'
+        type: string
+      headers:
+        description: 'The headers to pass on when performing an request'
+        type: array
+      data:
+        description: 'The data to be passed on as StUF'
+        type: array
+      requestTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      responseTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      mapping:
+        description: ''
+        type: array
+      requestMethod:
+        description: 'The HTTP method to use'
+        type: string
+      dateCreated:
+        description: 'The moment this resource was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this resource last Modified'
+        type: \Datetime
+      response:
+        description: 'The response received from the remote destination'
+        type: string
+      username:
+        description: 'The username to login with when using auth parameters'
+        type: string
+    required: []
+  StufInterface-write:
+    properties:
+      destination:
+        description: 'The destination url of the request'
+        type: string
+      headers:
+        description: 'The headers to pass on when performing an request'
+        type: array
+      data:
+        description: 'The data to be passed on as StUF'
+        type: array
+      requestTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      responseTemplate:
+        description: 'The template to use to create the StUF message'
+        type: string
+      mapping:
+        description: ''
+        type: array
+      authentication:
+        description: ''
+        type: array
+      requestMethod:
+        description: 'The HTTP method to use'
+        type: string
+      username:
+        description: 'The username to login with when using auth parameters'
+        type: string
+      password:
+        description: 'The password to login with when using auth parameters'
+        type: string
+      digest:
+        description: 'The digest needed to login with when using auth parameters'
+        type: string
+    required: []
   AuditTrail-read:
     properties:
       id:
@@ -2732,7 +2829,7 @@ host: irc.zaakonline.nl
 servers:
   -
     name: conduction.nl
-    url: pc.dev.conduction.nl
+    url: stuf.dev.conduction.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
