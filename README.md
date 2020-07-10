@@ -1,4 +1,4 @@
-# Stuff service
+# Readme
 -------
 
 The stuf service aims to provide a broad interface for sending api request out of the commonground ecosystem. 
@@ -10,7 +10,10 @@ If the receiver of the message requires a username/password authentication, the 
 
 ## Sending a request
 
-Also read the [redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/ConductionNL/stufservice/master/api/public/schema/openapi.yaml).
+* Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
+* Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
+* AVG and VNG proof audit trails
+* And [much more](https://packagist.org/packages/conduction/commongroundbundle) .... 
 
 In order to create and send an stuf request a REST JSON call should be made to the stuf interface endpoint. This call should at the lease contain 
 - The data that should be posted (that should preferably be as litle as an url to the commonground resource at the hard of the request).
