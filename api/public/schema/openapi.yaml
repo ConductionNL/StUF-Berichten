@@ -8,9 +8,9 @@ info:
     - Reference: stuf
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online](https://github.com/ConductionNL/proto-component) / [zip](https://github.com/ConductionNL/proto-component/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Repository: [online](https://github.com/ConductionNL/stufservice) / [zip](https://github.com/ConductionNL/stufservice/archive/master.zip)
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/stuf-php) 
+    - Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -2209,114 +2209,114 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
+        application:
+          writeOnly: true
+          description: 'The application that made the request'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+          nullable: true
         request:
-          readOnly: true
           description: 'The id of the request within that application'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         user:
-          readOnly: true
           description: 'The user on behalf of wich the request was made'
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+          nullable: true
         subject:
-          readOnly: true
           description: '???'
           type: string
+          nullable: true
         process:
-          readOnly: true
           description: 'The procces on behalf of wich the request was made'
           type: string
+          nullable: true
         dataElements:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         dataSubjects:
-          readOnly: true
           description: 'The moment this request was created'
           type: array
           items:
             type: string
+          nullable: true
         resource:
-          readOnly: true
           description: 'The resource that was requested'
           type: string
+          nullable: true
         resourceType:
-          readOnly: true
           description: 'The type of the resource that was requested'
           type: string
+          nullable: true
         route:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         endpoint:
-          readOnly: true
           description: 'The endpoint that the request was made to'
           type: string
         method:
-          readOnly: true
           description: 'The method that was used'
           type: string
         accept:
-          readOnly: true
           description: 'The contentType that was reqousted'
           type: string
         contentType:
-          readOnly: true
           description: 'The contentType that was suplieds'
           type: string
         content:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         ip:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
         headers:
-          readOnly: true
           description: 'The headers supplied by client'
           type: array
           items:
             type: string
         statusCode:
-          readOnly: true
           description: 'The status code returned to client'
           type: integer
+          nullable: true
         notFound:
-          readOnly: true
           description: 'Whether or not the reqousted endpoint was found'
           type: boolean
+          nullable: true
         forbidden:
-          readOnly: true
           description: 'Whether or not the client was allowed to the reqousted endpoint'
           type: boolean
+          nullable: true
         ok:
-          readOnly: true
           description: 'Whether or not there where any problems'
           type: boolean
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     'AuditTrail:jsonld-write':
       type: object
       description: 'An resource representing a log line.'
@@ -2340,6 +2340,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         action:
           type: string
         objectId:
@@ -2356,24 +2357,25 @@ components:
           nullable: true
         username:
           type: string
+          nullable: true
         session:
-          readOnly: true
           description: 'The moment this request was created'
           type: string
+          nullable: true
         dateCreated:
-          readOnly: true
           description: 'The moment this request was created'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
         dateModified:
-          readOnly: true
           description: 'The moment this request last Modified'
           externalDocs:
             url: 'http://schema.org/DateTime'
           type: string
           format: date-time
+          nullable: true
     ChangeLog-write:
       type: object
       description: 'An resource representing a log line.'
@@ -2396,6 +2398,7 @@ components:
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
+          format: uuid
         action:
           type: string
         objectId:
@@ -2485,6 +2488,35 @@ components:
           type: array
           items:
             type: string
+        requestMethod:
+          description: 'The HTTP method to use'
+          type: string
+        dateCreated:
+          description: 'The moment this resource was created'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this resource last Modified'
+          type: string
+          format: date-time
+          nullable: true
+        response:
+          description: 'The response received from the remote destination'
+          type: string
+          nullable: true
+        username:
+          description: 'The username to login with when using auth parameters'
+          type: string
+          nullable: true
+        password:
+          description: 'The password to login with when using auth parameters'
+          type: string
+          nullable: true
+        digest:
+          description: 'The digest needed to login with when using auth parameters'
+          type: string
+          nullable: true
     'StufInterface:jsonld':
       type: object
       description: ''
@@ -2499,9 +2531,6 @@ components:
           readOnly: true
           type: string
         id:
-          readOnly: true
-          type: string
-        destination:
           readOnly: true
           description: 'The UUID identifier of this object'
           externalDocs:
@@ -2523,8 +2552,13 @@ components:
           type: array
           items:
             type: string
-        template:
+        requestTemplate:
+          description: 'The template to use to create the StUF message'
           type: string
+        responseTemplate:
+          description: 'The template to use to create the StUF message'
+          type: string
+          nullable: true
         mapping:
           type: array
           items:
@@ -2533,6 +2567,35 @@ components:
           type: array
           items:
             type: string
+        requestMethod:
+          description: 'The HTTP method to use'
+          type: string
+        dateCreated:
+          description: 'The moment this resource was created'
+          type: string
+          format: date-time
+          nullable: true
+        dateModified:
+          description: 'The moment this resource last Modified'
+          type: string
+          format: date-time
+          nullable: true
+        response:
+          description: 'The response received from the remote destination'
+          type: string
+          nullable: true
+        username:
+          description: 'The username to login with when using auth parameters'
+          type: string
+          nullable: true
+        password:
+          description: 'The password to login with when using auth parameters'
+          type: string
+          nullable: true
+        digest:
+          description: 'The digest needed to login with when using auth parameters'
+          type: string
+          nullable: true
 definitions:
   StufInterface-read:
     properties:
@@ -2640,11 +2703,11 @@ definitions:
         maxLength: 255
       subject:
         description: '???'
-        type: \sting
+        type: string
         maxLength: 255
       process:
         description: 'The procces on behalf of wich the request was made'
-        type: \sting
+        type: string
         maxLength: 255
       dataElements:
         description: 'The moment this request was created'
@@ -2654,39 +2717,39 @@ definitions:
         type: array
       resource:
         description: 'The resource that was requested'
-        type: \sting
+        type: string
         maxLength: 255
       resourceType:
         description: 'The type of the resource that was requested'
-        type: \sting
+        type: string
         maxLength: 255
       route:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       endpoint:
         description: 'The endpoint that the request was made to'
-        type: \sting
+        type: string
         maxLength: 255
       method:
         description: 'The method that was used'
-        type: \sting
+        type: string
         maxLength: 255
       accept:
         description: 'The contentType that was reqousted'
-        type: \sting
+        type: string
         maxLength: 255
       contentType:
         description: 'The contentType that was suplieds'
-        type: \sting
+        type: string
         maxLength: 255
       content:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 2555
       ip:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       session:
         description: 'The moment this request was created'
@@ -2715,12 +2778,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-07-21 07:39:57'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-07-21 07:39:57'
     required: []
   AuditTrail-write:
     properties:
@@ -2729,14 +2792,6 @@ definitions:
         type: string
         example: 'This log line looks suspicius'
         maxLength: 2555
-    required: []
-  StufInterface-read:
-    properties:
-      destination:
-        description: 'The UUID identifier of this object'
-        type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
-        format: uuid
     required: []
   ChangeLog-read:
     properties:
@@ -2770,18 +2825,18 @@ definitions:
         type: string
       session:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       dateCreated:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-07-21 07:39:57'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-01 07:48:31'
+        example: '2020-07-21 07:39:57'
     required: []
   ChangeLog-write:
     properties:
@@ -2793,17 +2848,17 @@ definitions:
     required: []
 tags:
   -
-    name: AuditTrail
-    description: |
-      An resource representing a log line.
-      
-      This entity represents a product that can be ordered via the OrderRegistratieComponent.
-  -
     name: StufInterface
     description: |
       
       
       
+  -
+    name: AuditTrail
+    description: |
+      An resource representing a log line.
+      
+      This entity represents a product that can be ordered via the OrderRegistratieComponent.
   -
     name: ChangeLog
     description: |
