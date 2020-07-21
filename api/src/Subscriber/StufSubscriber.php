@@ -28,16 +28,17 @@ class StufSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => ['stuf', EventPriorities::POST_VALIDATE],
+            KernelEvents::VIEW => ['stuf', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
     public function stuf(RequestEvent $event)
     {
-//        $result = $event->getControllerResult();
+        $request = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
+
 
         if ($method != Request::METHOD_POST && !strpos($route, 'stuf_interfaces')) {
             return;
