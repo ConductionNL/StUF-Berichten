@@ -39,7 +39,6 @@ class StufSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
         $contentType = $event->getRequest()->headers->get('accept');
 
-
         if ($method != Request::METHOD_POST && !strpos($route, 'stuf_interfaces')) {
             return;
         }
