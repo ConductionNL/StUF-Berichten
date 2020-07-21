@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "post"
  *     },
  *     itemOperations={
+ *          "get"
  *     }
  * )
  * @ORM\Entity()
@@ -41,7 +42,7 @@ class StufInterface
      * @var string The destination url of the request
      *
      * @Groups({"read", "write"})
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="string")
      */
     private $destination;
 
@@ -219,7 +220,7 @@ class StufInterface
         return $this->mapping;
     }
 
-    public function setMapping(array $dataset): self
+    public function setMapping(array $mapping): self
     {
         $this->mapping = $mapping;
 
