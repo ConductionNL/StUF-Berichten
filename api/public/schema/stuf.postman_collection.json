@@ -1,22 +1,22 @@
 {
 	"info": {
-		"_postman_id": "5f307e33-530f-442d-875f-e632989de370",
-		"name": "Stuf component",
+		"_postman_id": "a23bb30c-40df-4298-9c0b-018d0317aca6",
+		"name": "Stuf Component",
 		"description": "API Details\n- Component: Stuf component\n- Reference: stuf\n- Enviroment: dev\n- Version: V.0.1\n- Repository: [online](https://github.com/ConductionNL/stufservice) / [zip](https://github.com/ConductionNL/stufservice/archive/master.zip)\n- Docker Image: [online](https://hub.docker.com/repository/docker/conduction/stuf-php) \n- Datamodel: [postman](/schema/stuf.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) \n\n'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         \n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Creates a StufInterface resource.",
+			"name": "Get Health",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "9d81c930-811d-49c5-8e58-e81a30e537ef",
+						"id": "3fa271c0-7e96-419b-a517-26333c40db31",
 						"exec": [
 							"// example using pm.response.to.have\r",
 							"pm.test(\"response is ok\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
 							"// example using response assertions\r",
@@ -28,21 +28,18 @@
 							"// example using pm.response.to.be*\r",
 							"pm.test(\"response must be valid and have a body\", function () {\r",
 							"     // assert that the status code is 200\r",
-							"     // pm.response.to.be.created; // info, success, redirection, clientError,  serverError, are other variants\r",
+							"     pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants\r",
 							"     // assert that the response has a valid JSON body\r",
 							"     pm.response.to.be.withBody;\r",
 							"     pm.response.to.be.json; // this assertion also checks if a body  exists, so the above check is not needed\r",
 							"});\r",
-							"\r",
-							"\r",
-							"pm.test(\"Set ID\", function () {\r",
+							"pm.test(\"status must be 'pass'\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    console.log(jsonData);\r",
 							"    //var payloadData = JSON.parse(jsonData.Payload); //parsed payload\r",
 							"\r",
 							"    //console.log(payloadData.Id);\r",
-							"\r",
-							"    pm.environment.set(\"stufinterface\", jsonData.id);\r",
+							"    pm.expect(jsonData.status).to.equal('pass');\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -50,265 +47,22 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
-						"key": "Authorization",
-						"value": "",
-						"description": "The JWT of the entity performing the request"
-					},
-					{
-						"key": "API-Version",
-						"value": "",
-						"description": "The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)"
-					},
-					{
-						"key": "X-NLX-Logrecord-ID",
-						"value": "",
-						"description": "A  globally unique id of the request, which makes a request traceable throughout the network."
-					},
-					{
-						"key": "X-NLX-Request-Process-Id",
-						"value": "",
-						"description": "A process id for purpose registration (doelbinding)"
-					},
-					{
-						"key": "X-NLX-Request-Data-Elements",
-						"value": "",
-						"description": "A list of requested data elements"
-					},
-					{
-						"key": "X-NLX-Request-Data-Subject",
-						"value": "",
-						"description": "A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`"
-					},
-					{
-						"key": "X-NLX-Audit-Clarification",
-						"value": "",
-						"description": "A clarification as to why a request has been made  (doelbinding)"
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
+						"key": "Accept",
+						"value": "application/health+json",
+						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"destination\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"headers\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"data\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestTemplate\": \"<string>\",\n    \"responseTemplate\": \"<string>\",\n    \"mapping\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"authentication\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestMethod\": \"<string>\",\n    \"dateCreated\": \"<dateTime>\",\n    \"dateModified\": \"<dateTime>\",\n    \"response\": \"<string>\",\n    \"username\": \"<string>\",\n    \"password\": \"<string>\",\n    \"digest\": \"<string>\"\n}"
-				},
 				"url": {
-					"raw": "{{baseUrl}}/stuf_interfaces",
+					"raw": "{{baseUrl}}",
 					"host": [
 						"{{baseUrl}}"
-					],
-					"path": [
-						"stuf_interfaces"
 					]
 				}
 			},
-			"response": [
-				{
-					"name": "StufInterface resource created",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "",
-								"description": "The JWT of the entity performing the request"
-							},
-							{
-								"key": "API-Version",
-								"value": "",
-								"description": "The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)"
-							},
-							{
-								"key": "X-NLX-Logrecord-ID",
-								"value": "",
-								"description": "A  globally unique id of the request, which makes a request traceable throughout the network."
-							},
-							{
-								"key": "X-NLX-Request-Process-Id",
-								"value": "",
-								"description": "A process id for purpose registration (doelbinding)"
-							},
-							{
-								"key": "X-NLX-Request-Data-Elements",
-								"value": "",
-								"description": "A list of requested data elements"
-							},
-							{
-								"key": "X-NLX-Request-Data-Subject",
-								"value": "",
-								"description": "A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`"
-							},
-							{
-								"key": "X-NLX-Audit-Clarification",
-								"value": "",
-								"description": "A clarification as to why a request has been made  (doelbinding)"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"destination\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"headers\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"data\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestTemplate\": \"<string>\",\n    \"responseTemplate\": \"<string>\",\n    \"mapping\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"authentication\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestMethod\": \"<string>\",\n    \"dateCreated\": \"<dateTime>\",\n    \"dateModified\": \"<dateTime>\",\n    \"response\": \"<string>\",\n    \"username\": \"<string>\",\n    \"password\": \"<string>\",\n    \"digest\": \"<string>\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/stuf_interfaces",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"stuf_interfaces"
-							]
-						}
-					},
-					"status": "Created",
-					"code": 201,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "application/ld+json"
-						}
-					],
-					"cookie": [],
-					"body": "{\n \"@context\": \"<string>\",\n \"@id\": \"<string>\",\n \"@type\": \"<string>\",\n \"id\": \"<uuid>\",\n \"destination\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"headers\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"data\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"requestTemplate\": \"<string>\",\n \"responseTemplate\": \"<string>\",\n \"mapping\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"authentication\": [\n  \"<string>\",\n  \"<string>\"\n ],\n \"requestMethod\": \"<string>\",\n \"dateCreated\": \"<dateTime>\",\n \"dateModified\": \"<dateTime>\",\n \"response\": \"<string>\",\n \"username\": \"<string>\",\n \"password\": \"<string>\",\n \"digest\": \"<string>\"\n}"
-				},
-				{
-					"name": "Invalid input",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "",
-								"description": "The JWT of the entity performing the request"
-							},
-							{
-								"key": "API-Version",
-								"value": "",
-								"description": "The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)"
-							},
-							{
-								"key": "X-NLX-Logrecord-ID",
-								"value": "",
-								"description": "A  globally unique id of the request, which makes a request traceable throughout the network."
-							},
-							{
-								"key": "X-NLX-Request-Process-Id",
-								"value": "",
-								"description": "A process id for purpose registration (doelbinding)"
-							},
-							{
-								"key": "X-NLX-Request-Data-Elements",
-								"value": "",
-								"description": "A list of requested data elements"
-							},
-							{
-								"key": "X-NLX-Request-Data-Subject",
-								"value": "",
-								"description": "A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`"
-							},
-							{
-								"key": "X-NLX-Audit-Clarification",
-								"value": "",
-								"description": "A clarification as to why a request has been made  (doelbinding)"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"destination\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"headers\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"data\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestTemplate\": \"<string>\",\n    \"responseTemplate\": \"<string>\",\n    \"mapping\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"authentication\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestMethod\": \"<string>\",\n    \"dateCreated\": \"<dateTime>\",\n    \"dateModified\": \"<dateTime>\",\n    \"response\": \"<string>\",\n    \"username\": \"<string>\",\n    \"password\": \"<string>\",\n    \"digest\": \"<string>\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/stuf_interfaces",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"stuf_interfaces"
-							]
-						}
-					},
-					"status": "Bad Request",
-					"code": 400,
-					"_postman_previewlanguage": "text",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "text/plain"
-						}
-					],
-					"cookie": [],
-					"body": ""
-				},
-				{
-					"name": "Resource not found",
-					"originalRequest": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "",
-								"description": "The JWT of the entity performing the request"
-							},
-							{
-								"key": "API-Version",
-								"value": "",
-								"description": "The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)"
-							},
-							{
-								"key": "X-NLX-Logrecord-ID",
-								"value": "",
-								"description": "A  globally unique id of the request, which makes a request traceable throughout the network."
-							},
-							{
-								"key": "X-NLX-Request-Process-Id",
-								"value": "",
-								"description": "A process id for purpose registration (doelbinding)"
-							},
-							{
-								"key": "X-NLX-Request-Data-Elements",
-								"value": "",
-								"description": "A list of requested data elements"
-							},
-							{
-								"key": "X-NLX-Request-Data-Subject",
-								"value": "",
-								"description": "A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`"
-							},
-							{
-								"key": "X-NLX-Audit-Clarification",
-								"value": "",
-								"description": "A clarification as to why a request has been made  (doelbinding)"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"destination\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"headers\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"data\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestTemplate\": \"<string>\",\n    \"responseTemplate\": \"<string>\",\n    \"mapping\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"authentication\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"requestMethod\": \"<string>\",\n    \"dateCreated\": \"<dateTime>\",\n    \"dateModified\": \"<dateTime>\",\n    \"response\": \"<string>\",\n    \"username\": \"<string>\",\n    \"password\": \"<string>\",\n    \"digest\": \"<string>\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/stuf_interfaces",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"stuf_interfaces"
-							]
-						}
-					},
-					"status": "Not Found",
-					"code": 404,
-					"_postman_previewlanguage": "text",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "text/plain"
-						}
-					],
-					"cookie": [],
-					"body": ""
-				}
-			]
+			"response": []
 		}
 	],
 	"auth": {
@@ -316,7 +70,7 @@
 		"apikey": [
 			{
 				"key": "value",
-				"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845",
+				"value": "{{authorization}}",
 				"type": "string"
 			},
 			{
@@ -330,7 +84,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "bc34bdc3-696f-409a-9fa4-c47f78a5cc48",
+				"id": "168e30df-5463-4bb6-8bdd-96eb690f1e2f",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -340,7 +94,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "70481429-5c6d-42e3-b935-9e59b1c52cb5",
+				"id": "6cdb0fd6-6dd0-4ee4-a95d-591ffb9cdb23",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -350,10 +104,14 @@
 	],
 	"variable": [
 		{
-			"id": "a8c05d62-44f9-4a60-acd5-4525f9f3dc73",
+			"id": "f7ba08a2-6420-4b26-8e62-5596994d75e2",
 			"key": "baseUrl",
-			"value": "stuf.dev.zuid-drecht.nl",
-			"type": "string"
+			"value": "https://stuf.dev.zuid-drecht.nl"
+		},
+		{
+			"id": "c8f00eb7-3c1f-4642-b18e-c73e60ab5075",
+			"key": "authorization",
+			"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
 		}
 	],
 	"protocolProfileBehavior": {}
