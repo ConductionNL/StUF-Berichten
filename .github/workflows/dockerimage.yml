@@ -72,7 +72,7 @@ jobs:
             - name: Security Checks
               run: docker-compose exec -T php composer req sensiolabs/security-checker
             - name: Run Postman Tests
-              if: !contains( github.ref, 'master' ) && !contains( github.base_ref, 'master' )
+              if: ! contains( github.ref, 'master' ) && ! contains( github.base_ref, 'master' )
               run: newman run api/public/schema/*.postman_collection.json
             - name: Chores
               run: docker-compose down
