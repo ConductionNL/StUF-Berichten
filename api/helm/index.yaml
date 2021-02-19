@@ -5,7 +5,7 @@ entries:
       category: Database
     apiVersion: v2
     appVersion: 11.10.0
-    created: "2021-02-19T10:25:46.9348436Z"
+    created: "2021-02-19T16:17:55.116873Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -37,10 +37,10 @@ entries:
   stufservice:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2021-02-19T10:25:46.912544Z"
+    created: "2021-02-19T16:17:55.0979824Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: 03810d6fcf39ea80be7b1449428cdd69e5bb3d8c5623dbfd157ab68aaf1bba4b
+    digest: 1c9a43c99fda07a1a6d70298036dfafc4f3ba74ec4d933f470ae757142570597
     home: https://www.conduction.nl
     icon: https://conductionnl.github.io/images/conduction_avatar_blue_on_transparant.svg
     keywords:
@@ -60,4 +60,4 @@ entries:
     urls:
     - stufservice-0.1.0.tgz
     version: 0.1.0
-generated: "2021-02-19T10:25:46.8959784Z"
+generated: "2021-02-19T16:17:55.0738085Z"
