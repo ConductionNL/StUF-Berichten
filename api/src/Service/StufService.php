@@ -71,7 +71,7 @@ class StufService
             var_dump($message);
             var_dump(json_encode($request->getDestination()));
             var_dump($response);
-            die;
+            exit;
         }
         //If a response template is set, render it
         if ($responseTemplate = $request->getResponseTemplate() != null) {
